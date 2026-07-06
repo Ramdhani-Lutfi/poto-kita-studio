@@ -1,0 +1,35 @@
+==================================================================
+        DOKUMEN KREDENSIAL AKSES UJI COBA - POTO KITA STUDIO
+==================================================================
+Informasi Deployment Lokal:
+- URL Aplikasi   : http://localhost:8080
+- Versi PHP      : 8.2.4
+- Framework      : CodeIgniter 4.7.3
+
+Gunakan akun di bawah ini untuk menguji hak akses masing-masing aktor:
+
+1. 🔐 LEVEL / ROLE : ADMIN (Pengelola )
+   - Username : admin
+   - Password : [admin123]
+   - Menu Uji : Dashboard admin, verifikasi pembayaran, jadwal hari ini.
+
+2. 🎨 LEVEL / ROLE : EDITOR (Pengunggah Hasil Foto)
+   - Username : editor
+   - Password : [editor123]
+   - Menu Uji : Penginputan tautan privat Google Drive untuk customer.
+
+3. 👥 LEVEL / ROLE : OWNER (dashboard pemilik Pemautauan kinerja )
+	
+   - Username : owner
+   - Password : [owner123]
+- Menu Uji : Akses monitoring total pendapatan riil studio 
+                dan laporan ringkasan performa operasional
+
+4. 👥 LEVEL / ROLE : CUSTOMER (Contoh Akun Pelanggan)
+	bisa register 
+   - Username : ayu
+   - Password : [saharani]
+
+   - Menu Uji : Riwayat foto, form booking baru, Reservasi jadwal baru (anti-double booking), 
+                upload struk transfer, unduh softfile via Drive.
+==================================================================
