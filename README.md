@@ -1,69 +1,57 @@
-# CodeIgniter 4 Application Starter
+# 📸 POTO KITA STUDIO - Sistem Informasi Pelayanan Pengaduan & Reservasi Sesi Foto
 
-## What is CodeIgniter?
+Aplikasi berbasis web yang dirancang khusus untuk mengelola sistem manajemen booking studio foto secara real-time, transparan, dan terintegrasi. Aplikasi ini dibangun menggunakan framework **CodeIgniter 4** dengan antarmuka modern bertema gelap (_Dark Mode Theme_) berbasis **Bootstrap 5**.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+---
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## 🚀 Fitur Utama Sistem (All-in-One Portal)
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+Aplikasi ini dibagi menjadi beberapa modul aktor (Multi-User Role) dengan fitur-fitur unggulan sebagai berikut:
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+### 1. 👥 Portal Publik & Manajemen Booking (Customer Experience)
 
-## Installation & updates
+- **Anti-Double Booking Validation (Real-Time Core Logic):** Fitur proteksi tingkat tinggi pada sistem back-end. Aplikasi secara otomatis mendeteksi dan mengunci slot jadwal berdasarkan kombinasi **Tanggal Sesi + Jam Sesi + Pilihan Ruangan Studio**. Jika slot waktu pada studio tersebut sudah dipesan pelanggan lain, sistem akan menolak otomatis melalui _flash message validation alert_.
+- **Aritmatika Bersyarat (Dynamic Pricing):** Kalkulasi biaya total tagihan dihitung secara otomatis berdasarkan:
+  - Harga dasar kategori studio (_Regular, Largest, atau VVIP Box_).
+  - Charge kelebihan kuota orang secara otomatis (Charge Rp 25.000 per kepala jika melewati limit kapasitas studio).
+  - Biaya tambahan kebersihan (+Rp 20.000) secara dinamis jika memilih opsi membawa hewan peliharaan.
+- **Unique Invoice Generator:** Sistem secara otomatis menerbitkan kode unik invoice aman dengan format `INV-TANGGAL-KODEACAK` (Contoh: `INV-20260706-FF96`) begitu reservasi sukses dibuat.
+- **Cek Status Transaksi Instan:** Pelanggan dapat melacak status pemesanan mereka secara fleksibel hanya dengan memasukkan nomor Invoice atau nomor WhatsApp terdaftar.
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+### 2. 🔐 Customer Dashboard Portal
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+- **Riwayat Foto Terintegrasi:** Halaman khusus bagi customer terdaftar untuk memantau semua riwayat transaksi booking sesi studio yang pernah mereka lakukan.
+- **Modul Mandiri Upload Bukti Bayar:** Fitur untuk mengunggah berkas gambar struk transfer bank (`.jpg`, `.jpeg`, `.png`) secara langsung ke server lokal (`public/uploads/`) dengan enkripsi penamaan acak (_random encrypted name_) demi keamanan file berkas.
+- **Pemisahan Sidebar Output Berkas Foto (Private Drive Link):** Menu khusus yang bersih untuk mengakses dan mengunduh hasil foto mentah (_raw files_). Tautan tombol langsung mengarah ke folder privat **Google Drive** yang telah disiapkan oleh tim studio.
+- **Direct WhatsApp Gateway Shortcode:** Tombol komunikasi interaktif terintegrasi yang otomatis mengarahkan pelanggan ke chat WhatsApp Admin resmi untuk konfirmasi pembayaran cepat menggunakan template pesan otomatis yang presisi.
 
-## Setup
+### 3. 🛠️ Administrator & Staff Dashboard
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+- **Ringkasan Indikator Keuangan (Widget Real-Time):** Menampilkan total sesi masuk, total pendapatan riil dari transaksi yang sudah divalidasi, dan jumlah antrean validasi pembayaran.
+- **Jadwal Sesi Foto Hari Ini:** Tabel pantauan terpusat untuk melihat daftar pelanggan yang akan melangsungkan sesi foto pada tanggal berjalan agar operasional kru studio berjalan teratur.
+- **Manajemen Antrean Verifikasi:** Otoritas penuh bagi admin untuk memeriksa keaslian gambar struk transfer, melakukan approval perubahan status invoice (`Pending`, `Confirmed / Paid`, `Batal`), serta hak akses bagi tim Editor untuk memasukkan link Google Drive customer.
 
-## Important Change with index.php
+### 4. 👑 Owner Dashboard (Strategic Oversight)
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+- **Monitoring Total Pendapatan Riil:** Owner memiliki hak akses eksklusif untuk memantau total omzet pendapatan studio foto secara keseluruhan berdasarkan grafik dan rekapitulasi data transaksi yang sudah divalidasi `Lunas` oleh Admin.
+- **Laporan Performa Bisnis:** Memantau metrik ringkasan performa sesi foto yang berjalan untuk kebutuhan analisis manajemen strategis studio.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+---
 
-**Please** read the user guide for a better explanation of how CI4 works!
+## 🛠️ Stack Teknologi
 
-## Repository Management
+- **Framework Back-End:** CodeIgniter 4 (Model-View-Controller Architecture)
+- **Bahasa Pemrograman:** PHP 8.2+
+- **Database Relasional:** MySQL / MariaDB (Driven by mysqli Engine)
+- **Front-End Styling:** Bootstrap 5.3 & FontAwesome Icons v6.4
+- **Typography:** Plus Jakarta Sans Google Fonts Ecosystem
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+---
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+## ⚙️ Petunjuk Pemasangan Lokal (Deployment)
 
-## Server Requirements
-
-PHP version 8.2 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+1. Clone repositori ini atau ekstrak file `.zip` ke dalam direktori server lokal Anda (`htdocs` atau `laragon/www`).
+2. Impor berkas database `.sql` yang telah disediakan ke dalam phpMyAdmin Anda.
+3. Sesuaikan konfigurasi database Anda pada file `.env` atau `app/Config/Database.php` (atur _hostname, username, password,_ dan nama _database_).
+4. Jalankan perintah `php spark serve` pada terminal direktori proyek.
+5. Akses aplikasi melalui peramban di alamat: `http://localhost:8080`
