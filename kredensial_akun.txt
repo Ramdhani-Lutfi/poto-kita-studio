@@ -27,8 +27,8 @@ Gunakan akun di bawah ini untuk menguji hak akses masing-masing aktor:
 
 4. 👥 LEVEL / ROLE : CUSTOMER (Contoh Akun Pelanggan)
 	bisa register 
-   - Username : ayu
-   - Password : [saharani]
+   - Username : ramdhani
+   - Password : [lutfi]
 
    - Menu Uji : Riwayat foto, form booking baru, Reservasi jadwal baru (anti-double booking), 
                 upload struk transfer, unduh softfile via Drive.
