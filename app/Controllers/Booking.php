@@ -8,7 +8,6 @@ class Booking extends BaseController
 {
     public function index()
     {
-        // Form sengaja dibuat bersih dan kosong tanpa lemparan session login admin
         return view('booking_page');
     }
 
@@ -23,17 +22,19 @@ class Booking extends BaseController
         $jumlah_orang   = (int)$this->request->getPost('jumlah_orang');
         $bawa_hewan     = $this->request->getPost('bawa_hewan') ?? 'No';
         
-        // 2. Validasi Anti Double Booking (Cek duplikasi Tanggal, Jam, DAN Tipe Studio)
-$jadwalBentrok = $bookingModel->where('tanggal_foto', $tanggal_foto)
-                              ->where('jam_foto', $jam_foto)
-                              ->where('tipe_studio', $tipe_studio) // <-- KUNCI TAMBAHAN: Biar studio lain gak ikut kekunci!
-                              ->whereIn('status_booking', ['Pending', 'Confirmed', 'Lunas', 'Selesai'])
-                              ->first();
+        // 2. Validasi Anti Double Booking Spesifik per Ruangan Studio
+        $jadwalBentrok = $bookingModel->where('tanggal_foto', $tanggal_foto)
+                                      ->where('jam_foto', $jam_foto)
+                                      ->where('tipe_studio', $tipe_studio)
+                                      ->whereIn('status_booking', ['Pending', 'Confirmed', 'Lunas', 'Selesai'])
+                                      ->first();
 
-// Jika slot waktu di studio tersebut sudah terisi, gagalkan otomatis
-if ($jadwalBentrok) {
-    return redirect()->back()->withInput()->with('error', 'Maaf, slot jadwal untuk ' . $tipe_studio . ' pada tanggal ' . $tanggal_foto . ' jam ' . $jam_foto . ' WIB sudah di-booking pelanggan lain. Silakan pilih studio atau waktu lain!');
-}
+        // Jika slot waktu pada studio terpilih sudah terisi, baru kita tolak
+        if ($jadwalBentrok) {
+            return redirect()->back()->withInput()->with('error', 'Maaf, slot jadwal untuk ' . $tipe_studio . 
+            ' pada tanggal ' . $tanggal_foto . ' jam ' . $jam_foto . ' WIB sudah di-booking pelanggan lain.
+             Silakan pilih studio atau waktu lain!');
+        }
 
         // 3. Tentukan harga dasar dan batas kuota berdasarkan tipe studio
         $harga_dasar = 0;
@@ -63,7 +64,7 @@ if ($jadwalBentrok) {
         // 6. Total Akhir Tagihan
         $total_harga = $harga_dasar + $biaya_tambahan_orang + $biaya_hewan;
 
-        // 7. Generate Nomor Invoice Unik Otomatis (INV-TANGGAL-KODEACAK)
+        // 7. Generate Nomor Invoice Unik Otomatis
         $invoice_number = 'INV-' . date('Ymd') . '-' . strtoupper(substr(md5(time()), 0, 4));
 
         // 8. Siapkan susunan array data untuk disimpan ke MySQL
@@ -81,9 +82,8 @@ if ($jadwalBentrok) {
             'status_booking'    => 'Pending'
         ];
 
-        // 9. Eksekusi simpan ke database dengan metode proteksi murni CodeIgniter 4
+        // 9. Eksekusi simpan ke database
         if ($bookingModel->insert($data_simpan)) {
-            // Mengirimkan variabel invoice dan total harga ke halaman view sukses
             return view('booking_sukses', [
                 'invoice_number' => $invoice_number,
                 'total_harga'    => $total_harga
@@ -93,13 +93,11 @@ if ($jadwalBentrok) {
         }
     }
 
-    // 1. Menampilkan halaman form pencarian status invoice
     public function cekStatus()
     {
         return view('booking_cek');
     }
 
-    // 2. Memproses pencarian nomor invoice ke database
     public function cariStatus()
     {
         $input_pencarian = $this->request->getPost('invoice_number');
@@ -115,13 +113,11 @@ if ($jadwalBentrok) {
         ]);
     }
 
-    // 1. Menampilkan halaman form upload bukti bayar
     public function uploadBayar()
     {
         return view('booking_upload');
     }
 
-    // 2. Memproses file gambar bukti transfer ke folder public/uploads
     public function prosesUpload()
     {
         $invoice = $this->request->getPost('invoice_number');
@@ -151,13 +147,11 @@ if ($jadwalBentrok) {
         return redirect()->back()->with('error', 'Gagal mengunggah file. Pastikan format file berupa gambar.');
     }
 
-    // 1. Menampilkan halaman form pencarian unduhan foto
     public function downloadFoto()
     {
         return view('booking_download');
     }
 
-    // 2. Memproses pencarian link Google Drive hasil foto di database
     public function cariFoto()
     {
         $input_pencarian = $this->request->getPost('invoice_number');
@@ -177,4 +171,4 @@ if ($jadwalBentrok) {
     {
         return view('booking_aturan');
     }
-}   
+}

@@ -37,7 +37,7 @@ class Customer extends BaseController
     }
 
     // FITUR UTAMA: Menampilkan Halaman Upload Bukti Pembayaran (GET)
-    public function upload_pembayaran($id_booking)
+    public function upload_pembayaran(int $id_booking)
     {
         if (!session()->get('isLoggedIn')) {
             return redirect()->to('/login');
