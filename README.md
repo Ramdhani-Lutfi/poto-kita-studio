@@ -55,3 +55,12 @@ Aplikasi ini dibagi menjadi beberapa modul aktor (Multi-User Role) dengan fitur-
 3. Sesuaikan konfigurasi database Anda pada file `.env` atau `app/Config/Database.php` (atur _hostname, username, password,_ dan nama _database_).
 4. Jalankan perintah `php spark serve` pada terminal direktori proyek.
 5. Akses aplikasi melalui peramban di alamat: `http://localhost:8080`
+
+## ⚙️ Kredensial
+| Role     | Username         | Password                |
+| -------- | ---------------- | ----------------------- |
+| Admin    | admin            | admin123                |
+| Editor   | editor           | editor123               |
+| Owner    | owner            | owner123                |
+| Customer | ramdhani         | lutfi                   |
+
